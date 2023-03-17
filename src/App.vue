@@ -7,12 +7,15 @@
   <div class="content-body">
     <!-- row -->
     <div class="container-fluid">
-    <router-view></router-view>
+    <router-view ></router-view>
+
     </div>
   </div>
+  <footer-vue></footer-vue>
   <!--**********************************
       Content body end
   ***********************************-->
+
 
   <!-- Required vendors -->
 </template>
@@ -26,13 +29,19 @@
 
 
 import HeaderVue from './components/Header.vue'
+import FooterVue from './components/Footer.vue'
 
 
 export default {
   name: 'App',
   components: {
     HeaderVue,
+    FooterVue
+  },
+  data() {
+    return {
 
+    }
   }
 }
 </script>

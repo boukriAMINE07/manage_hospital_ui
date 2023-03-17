@@ -25,7 +25,7 @@
         </div>
         <div class="card-body">
           <div class="table-responsive">
-            <table class="table table-responsive-md">
+            <table class="table table-hover table-responsive-md">
               <thead>
               <tr>
                 <th style="width:80px;"><strong>#</strong></th>
@@ -39,7 +39,7 @@
               </tr>
               </thead>
               <tbody>
-              <tr v-for="(patient,index) in patientList" :key="index">
+              <tr v-for="(patient,index) in patientList" :key="index" @click="detailsPatient(patient)">
                 <td><strong>{{patient.id}}</strong></td>
                 <td v-if="patient.gender==='MALE'" >Mr.{{patient.name}}</td>
                 <td v-else >Mme.{{patient.name}}</td>
@@ -133,6 +133,9 @@ export default {
     },
     updatePatient(id){
       this.$router.push({name: 'edit-patient', params: {id: id}});
+    },
+    detailsPatient(patient){
+      this.$router.push({name: 'patient-details', params: {id: patient.id}});
     }
 
   },

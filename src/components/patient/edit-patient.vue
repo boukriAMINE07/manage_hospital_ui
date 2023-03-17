@@ -81,7 +81,7 @@ export default {
         address: "",
         gender: "MALE",
         birthdate: "",
-        isSick: false
+        sick: false
       }
 
     }

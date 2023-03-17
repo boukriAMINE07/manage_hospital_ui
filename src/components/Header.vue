@@ -3,10 +3,10 @@
   <div id="main-wrapper">
 
     <!--**********************************
-        Nav header start
-    ***********************************-->
+            Nav header start
+        ***********************************-->
     <div class="nav-header">
-      <a href="#" class="brand-logo">
+      <a href="index.html" class="brand-logo">
         <svg class="logo-abbr" width="52" height="52" viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M43.6868 12.7616C40.1151 12.2824 37.3929 9.08842 37.4346 5.5015C37.4378 4.67971 36.7515 3.99084 35.9297 3.99084H16.0768C15.2549 3.99084 14.5686 4.6798 14.5718 5.50176C14.6154 9.2348 11.8602 12.1604 8.27235 12.7689C7.55967 12.8877 7.03203 13.4961 7.01529 14.2184C6.87192 20.3982 7.73739 26.0092 9.58742 30.8954C11.0817 34.8418 13.2159 38.3236 15.9312 41.244C20.5868 46.2516 25.3291 47.8676 25.5287 47.9339C25.8821 48.0512 26.2736 48.0324 26.6139 47.8813C26.8091 47.7946 31.4487 45.6988 36.0396 40.4854L33.7807 38.4962C30.5157 42.204 27.1941 44.1849 25.9274 44.8604C24.6586 44.319 21.3888 42.6938 18.1355 39.1945C12.8056 33.4615 10.0074 25.2828 10.0102 15.4863C13.9686 14.4225 16.9309 11.0547 17.4877 7.00084H34.519C35.0754 11.0521 38.0342 14.4179 41.9885 15.4841C41.9391 21.8543 40.5621 27.6001 37.8898 32.5794L40.5418 34.0028C43.628 28.2524 45.1251 21.5986 44.9916 14.226C44.978 13.4826 44.4237 12.8606 43.6868 12.7616Z" fill="url(#paint0_linear)"/>
           <path d="M27.5047 20.3571H24.4948V23.5551H21.2968V26.565H24.4948V29.763H27.5047V26.565H30.7027V23.5551H27.5047V20.3571Z" fill="#04A547"/>
@@ -268,7 +268,7 @@
               <li><a href="index.html">Dashboard Light</a></li>
               <li><a href="index-2.html">Dashboard Dark</a></li>
               <li>
-              <router-link to="/patients">Patients</router-link>
+              <router-link to="/patients" >Patients</router-link>
               </li>
               <li><a href="patient-details.html">Patient Details</a></li>
               <router-link to="/doctors">Doctors</router-link>
@@ -286,8 +286,8 @@
             <span class="nav-text">Staff</span>
           </a>
             <ul aria-expanded="false">
-              <li><a href="staff.html">Staff</a></li>
-              <li><a href="staff-profile.html">Staff Profie</a></li>
+              <router-link to="/doctors">Doctors</router-link>
+              <router-link to="/administrators">Administrators</router-link>
             </ul>
           </li>
           <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
@@ -417,13 +417,10 @@
           </li>
         </ul>
 
-        <div class="plus-box">
-          <p class="fs-16 font-w500 mb-1">Check your job schedule</p>
-          <a class="text-white fs-26" href="javascript:;"><i class="las la-long-arrow-alt-right"></i></a>
-        </div>
-        <div class="copyright">
-          <p class="fs-14 font-w200"><strong class="font-w400">Eres Hospital Admin Dashboard</strong> © 2022 All Rights Reserved</p>
-          <p class="fs-12">Made with <span class="heart"></span> by DexignZone</p>
+
+        <div class="copyright mt-5">
+          <p class="fs-14 font-w200"><strong class="font-w400">Eres Hospital Admin Dashboard</strong> © 2023 All Rights Reserved</p>
+          <p class="fs-12">Made with <span class="heart"></span> by Boukri Amine</p>
         </div>
       </div>
     </div>
@@ -451,7 +448,8 @@
 
 <script>
 export default {
-  name: "Header-vue"
+  name: "Header-vue",
+
 }
 </script>
 
