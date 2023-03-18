@@ -39,7 +39,7 @@
               </tr>
               </thead>
               <tbody>
-              <tr v-for="(patient,index) in patientList" :key="index" @click="detailsPatient(patient)">
+              <tr v-for="(patient) in patientList" :key="patient.id" @click="detailsPatient(patient)">
                 <td><strong>{{patient.id}}</strong></td>
                 <td v-if="patient.gender==='MALE'" >Mr.{{patient.name}}</td>
                 <td v-else >Mme.{{patient.name}}</td>
@@ -71,8 +71,28 @@
                 </td>
               </tr>
 
+
               </tbody>
             </table>
+            <div v-if="totalPages > 0">
+
+
+              <nav>
+                <ul class="pagination pagination-gutter">
+                  <li class="page-item page-indicator" v-show="currentPage > 0" @click="previousPage">
+                    <a class="page-link" href="javascript:void(0)">
+                      <i class="la la-angle-left"></i></a>
+                  </li>
+                  <li class="page-item " v-for="page in totalPages" :key="page-1" @click="goToPage(page-1)" :class="{ active: page-1 === currentPage }"><a class="page-link" href="javascript:void(0)">{{page}}</a>
+                  </li>
+
+                  <li class="page-item page-indicator"  v-show="currentPage+1 <totalPages" @click="nextPage">
+                    <a class="page-link" href="javascript:void(0)">
+                      <i class="la la-angle-right"></i></a>
+                  </li>
+                </ul>
+              </nav>
+          </div>
           </div>
         </div>
       </div>
@@ -90,37 +110,57 @@ export default {
   data(){
     return{
       patientList: [],
-      currentPatient: null,
-      currentIndex: -1,
-      defaultPage: 0,
-      defaultSize: 10,
-      searchPatient: ""
+      currentPage: 0,
+      defaultSize: 5,
+      searchPatient: "",
+      totalPatients: 0,
+      totalPages: 0,
+
     }
   },
+
   methods: {
     retrievePatients(){
 
-      PatientDataService.getAllPatients(this.defaultPage, this.defaultSize)
+      PatientDataService.getAllPatients(this.currentPage, this.defaultSize)
         .then(response => {
           this.patientList = response.data.patients;
+          this.totalPatients = response.data.totalItems;
+          this.totalPages= response.data.totalPages;
           console.log(this.patientList);
         })
         .catch(e => {
           console.log(e);
         });
     },
+      previousPage() {
+        this.currentPage--;
+        this.retrievePatients();
+      },
+      nextPage() {
+        this.currentPage++;
+        this.retrievePatients();
+      },
+      goToPage(page) {
+        this.currentPage = page;
+        this.retrievePatients();
+      },
     retrievePatientsBySearch(event){
       this.name=event.target.value;
+      this.currentPage=0;
 
-      PatientDataService.getAllPatientsWithSearchTerm(this.searchPatient, this.defaultPage, this.defaultSize)
+      PatientDataService.getAllPatientsWithSearchTerm(this.searchPatient, this.currentPage, this.defaultSize)
         .then(response => {
           this.patientList = response.data.patients;
+          this.totalPatients = response.data.totalItems;
+          this.totalPages= response.data.totalPages;
           console.log(response.data);
         })
         .catch(e => {
           console.log(e);
         });
     },
+
     deletePatient(id){
       PatientDataService.deletePatient(id)
         .then(response => {

@@ -173,7 +173,7 @@ export default {
       patients: [],
       administrators: [],
       defaultPage: 0,
-      defaultSize: 2,
+      defaultSize: 6,
       doctorLength: 0,
       patientLength: 0,
       administratorLength: 0,

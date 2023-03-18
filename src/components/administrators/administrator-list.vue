@@ -67,6 +67,25 @@
 
               </tbody>
             </table>
+            <div v-if="totalPages > 0">
+
+
+              <nav>
+                <ul class="pagination text-center pagination-gutter">
+                  <li class="page-item page-indicator" v-show="currentPage > 0" @click="previousPage">
+                    <a class="page-link" href="javascript:void(0)">
+                      <i class="la la-angle-left"></i></a>
+                  </li>
+                  <li class="page-item " v-for="page in totalPages" :key="page-1" @click="goToPage(page-1)" :class="{ active: page-1 === currentPage }"><a class="page-link" href="javascript:void(0)">{{page}}</a>
+                  </li>
+
+                  <li class="page-item page-indicator"  v-show="currentPage+1 <totalPages" @click="nextPage">
+                    <a class="page-link" href="javascript:void(0)">
+                      <i class="la la-angle-right"></i></a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
           </div>
         </div>
       </div>
@@ -81,19 +100,21 @@ export default {
   data(){
     return{
       administratorList: [],
-      currentAdministrator: null,
-      currentIndex: -1,
-      defaultPage: 0,
-      defaultSize: 10,
+      currentPage: 0,
+      defaultSize: 5,
       searchAdministrator: "",
+      totalAdministrator: 0,
+      totalPages: 0,
 
     }
   },
   methods:{
     retrieveAdministrator(){
-      AdministratorDataService.getAllAdministrator(this.defaultPage,this.defaultSize)
+      AdministratorDataService.getAllAdministrator(this.currentPage,this.defaultSize)
         .then(response => {
           this.administratorList = response.data.administrators;
+          this.totalAdministrator = response.data.totalItems;
+          this.totalPages= response.data.totalPages;
           console.log(response.data);
         })
         .catch(e => {
@@ -101,14 +122,29 @@ export default {
         });
     },
     retrieveAdministratorBySearch(){
-      AdministratorDataService.getALlAdministratorWithSearchTerm(this.searchAdministrator,this.defaultPage,this.defaultSize)
+      this.currentPage=0;
+      AdministratorDataService.getALlAdministratorWithSearchTerm(this.searchAdministrator,this.currentPage,this.defaultSize)
         .then(response => {
           this.administratorList = response.data.administrators;
-          console.log(this.administratorList);
+          this.totalAdministrator = response.data.totalItems;
+          this.totalPages= response.data.totalPages;
+          //console.log(this.administratorList);
         })
         .catch(e => {
           console.log(e);
         });
+    },
+    previousPage() {
+      this.currentPage--;
+      this.retrieveAdministrator();
+    },
+    nextPage() {
+      this.currentPage++;
+      this.retrieveAdministrator();
+    },
+    goToPage(page) {
+      this.currentPage = page;
+      this.retrieveAdministrator();
     },
     detailsAdministrator(administrator){
       this.$router.push({name: 'administrator-details', params: {id: administrator.id}});

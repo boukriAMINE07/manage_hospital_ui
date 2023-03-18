@@ -37,7 +37,7 @@
               </tr>
               </thead>
               <tbody>
-              <tr v-for="(doctor,index) in doctorList" :key="index" @dblclick="detailsdoctor(doctor)">
+              <tr v-for="(doctor,index) in doctorList" :key="index" @dblclick="detailsDoctor(doctor)">
                 <td  ><strong>{{doctor.id}}</strong></td>
                 <td class="text-truncate">Dr. {{doctor.name}}</td>
                 <td>{{doctor.gender}}</td>
@@ -57,7 +57,7 @@
                     <div class="dropdown-menu">
                       <a class="dropdown-item" @click="updateDoctor(doctor.id)" href="javascript:void(0);">Edit</a>
                       <a class="dropdown-item" @click="deleteDoctor(doctor.id)" href="javascript:void(0);">Delete</a>
-                      <a class="dropdown-item" @click="detailsdoctor(doctor.id)" href="javascript:void(0);">Details</a>
+                      <a class="dropdown-item" @click="detailsDoctor(doctor.id)" href="javascript:void(0);">Details</a>
 
                     </div>
                   </div>
@@ -68,11 +68,31 @@
 
               </tbody>
             </table>
+            <div v-if="totalPages > 0">
+
+
+              <nav>
+                <ul class="pagination text-center pagination-gutter">
+                  <li class="page-item page-indicator" v-show="currentPage > 0" @click="previousPage">
+                    <a class="page-link" href="javascript:void(0)">
+                      <i class="la la-angle-left"></i></a>
+                  </li>
+                  <li class="page-item " v-for="page in totalPages" :key="page-1" @click="goToPage(page-1)" :class="{ active: page-1 === currentPage }"><a class="page-link" href="javascript:void(0)">{{page}}</a>
+                  </li>
+
+                  <li class="page-item page-indicator"  v-show="currentPage+1 <totalPages" @click="nextPage">
+                    <a class="page-link" href="javascript:void(0)">
+                      <i class="la la-angle-right"></i></a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
+
 </template>
 
 <script>
@@ -82,11 +102,11 @@ export default {
   data(){
     return{
       doctorList: [],
-      currentDoctor: null,
-      currentIndex: -1,
-      defaultPage: 0,
-      defaultSize: 10,
+      currentPage: 0,
+      defaultSize: 5,
       searchDoctor: "",
+      totalDoctors: 0,
+      totalPages: 0,
       badgeClasses: {
         DENTIST: 'badge light badge-warning',
         NEUROLOGIST: 'badge light badge-success',
@@ -97,10 +117,12 @@ export default {
   },
   methods:{
     retrieveDoctors(){
-      DoctorDataService.getAllDoctors(this.defaultPage,this.defaultSize)
+      DoctorDataService.getAllDoctors(this.currentPage,this.defaultSize)
         .then(response => {
           this.doctorList = response.data.doctors;
-          console.log(response.data);
+          this.totalDoctors = response.data.totalItems;
+          this.totalPages= response.data.totalPages;
+          //console.log(response.data.doctors);
         })
         .catch(e => {
           console.log(e);
@@ -108,15 +130,30 @@ export default {
     },
     retrievePatientsBySearch(event){
       this.name=event.target.value;
+      this.currentPage=0;
 
-      DoctorDataService.getAllPatientsWithSearchTerm(this.searchDoctor, this.defaultPage, this.defaultSize)
+      DoctorDataService.getAllPatientsWithSearchTerm(this.searchDoctor, this.currentPage, this.defaultSize)
           .then(response => {
             this.doctorList = response.data.doctors;
+            this.totalDoctors = response.data.totalItems;
+            this.totalPages= response.data.totalPages;
             console.log(response.data);
           })
           .catch(e => {
             console.log(e);
           });
+    },
+    previousPage() {
+      this.currentPage--;
+      this.retrieveDoctors();
+    },
+    nextPage() {
+      this.currentPage++;
+      this.retrieveDoctors();
+    },
+    goToPage(page) {
+      this.currentPage = page;
+      this.retrieveDoctors();
     },
     deleteDoctor(id){
       DoctorDataService.deleteDoctor(id)
@@ -131,7 +168,7 @@ export default {
     updateDoctor(id){
       this.$router.push({name: 'edit-doctor', params: {id: id}});
     },
-    detailsdoctor(doctor){
+    detailsDoctor(doctor){
       this.$router.push({name: 'doctor-details', params: {id: doctor.id}});
     }
   },
