@@ -31,7 +31,7 @@
                             <div class="col-md-8 mt-2">
                               <span><i class="fa fa-building me-2"></i> ICU Department</span>
                             </div>
-                            <div class="col-md-8 mt-2">
+                            <div class="col-md-12 mt-2">
                               <span><i class="fa fa-phone me-2"></i> (+212) {{doctor.phone}}</span>
                             </div>
                             <div class="col-md-12 mt-2">

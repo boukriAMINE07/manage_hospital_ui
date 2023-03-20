@@ -7,6 +7,7 @@
   <div class="content-body">
     <!-- row -->
     <div class="container-fluid">
+      <home-vue></home-vue>
     <router-view ></router-view>
 
     </div>
@@ -30,11 +31,13 @@
 
 import HeaderVue from './components/Header.vue'
 import FooterVue from './components/Footer.vue'
+import HomeVue from "@/components/Home";
 
 
 export default {
   name: 'App',
   components: {
+    HomeVue,
     HeaderVue,
     FooterVue
   },

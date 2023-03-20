@@ -3,9 +3,8 @@ import {createRouter, createWebHistory} from "vue-router/dist/vue-router";
 
 const routes = [
     {
-    path: '/',
-    name: 'home-vue',
-    component: () => import("./components/Home")
+        path: '/',
+        redirect: '/appointments',
     },
     {
     path: '/patients',
@@ -66,6 +65,46 @@ const routes = [
         path:'/administrators/administrator-details/:id',
         name:'administrator-details',
         component: () => import("./components/administrators/administrator-details")
+    },
+    {
+        path:'/appointments',
+        name:'appointment-list',
+        component: () => import("./components/appointment/appointment-list")
+    },
+    {
+        path:'/appointments/add-appointment',
+        name:'add-appointment',
+        component: () => import("./components/appointment/add-appointment")
+    },
+    {
+        path:'/appointments/edit-appointment/:id',
+        name:'edit-appointment',
+        component: () => import("./components/appointment/edit-appointment")
+    },
+    {
+        path:'/appointments/appointment-details/:id',
+        name:'appointment-details',
+        component: () => import("./components/appointment/appointment-details")
+    },
+    {
+        path:'/consultations',
+        name:'consultation-list',
+        component: () => import("./components/consultation/consultation-list")
+    },
+    {
+        path:'/consultations/add-consultation',
+        name:'add-consultation',
+        component: () => import("./components/consultation/add-consultation")
+    },
+    {
+        path:'/consultations/edit-consultation/:id',
+        name:'edit-consultation',
+        component: () => import("./components/consultation/edit-consultation")
+    },
+    {
+        path:'/consultations/consultation-details/:id',
+        name:'consultation-details',
+        component: () => import("./components/consultation/consultation-details")
     }
 
 

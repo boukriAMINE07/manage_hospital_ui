@@ -7,7 +7,7 @@ class PatientDataService{
     }
 
     getAll(){
-        return http.get(`/allPatients`);
+        return http.get(`/patients/all`);
     }
     //get all patients with a search term and page number and size
     getAllPatientsWithSearchTerm(searchTerm,page, size ){

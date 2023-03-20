@@ -39,7 +39,7 @@
               </tr>
               </thead>
               <tbody>
-              <tr v-for="(patient) in patientList" :key="patient.id" @click="detailsPatient(patient)">
+              <tr v-for="(patient) in patientList" :key="patient.id" @dblclick="detailsPatient(patient)">
                 <td><strong>{{patient.id}}</strong></td>
                 <td v-if="patient.gender==='MALE'" >Mr.{{patient.name}}</td>
                 <td v-else >Mme.{{patient.name}}</td>
